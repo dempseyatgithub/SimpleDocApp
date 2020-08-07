@@ -29,7 +29,7 @@ struct SidebarNavigationView: View {
             }
             .frame(minWidth: 200, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
         }
-        
+        .navigationViewStyle(DoubleColumnNavigationViewStyle())
     }
 }
 
