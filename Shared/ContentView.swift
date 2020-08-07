@@ -11,7 +11,7 @@ struct ContentView: View {
         @Binding var document: SimpleDocAppDocument
     
     var body: some View {
-        MasterDetailView(items: $document.items)
+        SidebarNavigationView(items: $document.items)
     }
 }
 

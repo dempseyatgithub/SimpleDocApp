@@ -1,5 +1,5 @@
 //
-//  MasterDetailView.swift
+//  SidebarNavigationView.swift
 //  SimpleDocApp
 //
 //  Created by James Dempsey on 7/23/20.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MasterDetailView: View {
+struct SidebarNavigationView: View {
     @Binding var items: [SimpleItem]
     
     var body: some View {
@@ -33,8 +33,8 @@ struct MasterDetailView: View {
     }
 }
 
-struct MasterDetailView_Previews: PreviewProvider {
+struct SidebarNavigationView_Previews: PreviewProvider {
     static var previews: some View {
-        MasterDetailView(items: .constant(SimpleItem.initialItems))
+        SidebarNavigationView(items: .constant(SimpleItem.initialItems))
     }
 }
