@@ -12,7 +12,7 @@ extension UTType {
     static let simpleDocument = UTType(exportedAs: "com.example.simple-document", conformingTo: .json)
 }
 
-struct SimpleDocAppDocument: FileDocument, Codable {
+struct SimpleDocAppDocument: FileDocument {
     var items: [SimpleItem]
 
     init() {
@@ -20,15 +20,19 @@ struct SimpleDocAppDocument: FileDocument, Codable {
     }
 
     static var readableContentTypes: [UTType] { [.simpleDocument] }
-
-    init(fileWrapper: FileWrapper, contentType: UTType) throws {
-        let data = fileWrapper.regularFileContents!
-        self = try JSONDecoder().decode(Self.self, from: data)
+    
+    init(configuration: ReadConfiguration) throws {
+        guard let data = configuration.file.regularFileContents,
+              let array = try? JSONDecoder().decode([SimpleItem].self, from: data)
+        else {
+            throw CocoaError(.fileReadCorruptFile)
+        }
+        items = array
     }
     
-    func write(to fileWrapper: inout FileWrapper, contentType: UTType) throws {
-        let data = try JSONEncoder().encode(self)
-        fileWrapper = FileWrapper(regularFileWithContents: data)
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        let data = try JSONEncoder().encode(items)
+        return FileWrapper(regularFileWithContents: data)
     }
     
 }
